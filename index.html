@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice 66 | Premium Dining Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spice: {
+                            500: '#E85D04',
+                            600: '#DC2F02',
+                            700: '#9D0208',
+                        },
+                        dark: '#0A0A0A'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Custom Styles & Premium Micro-interactions */
+        body {
+            background-color: #0A0A0A;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            cursor: none; /* Hidden default cursor for custom follower */
+        }
+
+        /* The Premium "Spice Aura" Cursor Follower */
+        #cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(232, 93, 4, 0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* Custom dot cursor */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #E85D04;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(232, 93, 4, 0.3);
+        }
+
+        /* Image Hover Effects */
+        .img-reveal {
+            overflow: hidden;
+        }
+        .img-reveal img {
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-reveal:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Magnetic Button Container */
+        .magnetic-wrap {
+            display: inline-block;
+            padding: 20px;
+            margin: -20px;
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E85D04;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-spice-500 selection:text-white">
+
+    <div id="cursor-glow"></div>
+    <div id="cursor-dot"></div>
+
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif font-bold tracking-widest text-white hover:text-spice-500 transition-colors">SPICE 66</a>
+            
+            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider items-center">
+                <a href="#about" class="hover:text-spice-500 transition-colors">Story</a>
+                <a href="#menu" class="hover:text-spice-500 transition-colors">Menu</a>
+                <a href="#gallery" class="hover:text-spice-500 transition-colors">Gallery</a>
+                <a href="#contact" class="hover:text-spice-500 transition-colors">Contact</a>
+                
+                <div class="magnetic-wrap">
+                    <a href="#book" class="magnetic-btn border border-spice-500 text-spice-500 px-6 py-2 rounded-full hover:bg-spice-500 hover:text-white transition-all duration-300">
+                        Reserve Table
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative h-screen flex items-center justify-center overflow-hidden z-10">
+        <div class="absolute inset-0 z-0 scale-105" id="hero-bg">
+            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop" alt="Premium Restaurant" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/50 via-dark/20 to-dark"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <p class="hero-anim text-spice-500 tracking-[0.3em] uppercase text-sm md:text-base mb-4 font-semibold">An Elevated Experience</p>
+            <h1 class="hero-anim text-6xl md:text-8xl font-serif font-bold text-white mb-6 leading-tight">
+                Taste the Fire.<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-spice-500 to-spice-700">Feel the Elegance.</span>
+            </h1>
+            <p class="hero-anim text-gray-300 text-lg md:text-xl mb-10 font-light max-w-2xl mx-auto">
+                Modern culinary artistry meets bold, unforgettable flavors. Spice 66 redefines fine dining for the modern palate.
+            </p>
+            <div class="hero-anim magnetic-wrap">
+                <a href="#book" class="magnetic-btn bg-spice-600 text-white px-10 py-4 rounded-full text-sm uppercase tracking-widest hover:bg-spice-500 transition-colors shadow-[0_0_20px_rgba(220,47,2,0.4)]">
+                    Book Your Experience
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center hero-anim opacity-50">
+            <span class="text-xs tracking-widest uppercase mb-2">Discover</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-spice-500 to-transparent"></div>
+        </div>
+    </section>
+
+    <section id="about" class="py-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="gsap-fade-up">
+                <h2 class="text-spice-500 tracking-[0.2em] uppercase text-sm mb-4">Our Heritage</h2>
+                <h3 class="text-4xl md:text-6xl font-serif font-bold mb-6">A Symphony of Spices</h3>
+                <p class="text-gray-400 mb-6 leading-relaxed font-light text-lg">
+                    Born from a passion for authentic flavors and modern aesthetics, Spice 66 brings a transformative dining experience. We source the rarest spices globally, blending them with local, sustainable produce to create masterpieces on a plate.
+                </p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Signature_placeholder.svg" alt="Chef Signature" class="w-32 opacity-70 filter invert">
+            </div>
+            <div class="img-reveal h-[600px] rounded-sm gsap-fade-left">
+                <img src="https://images.unsplash.com/photo-1577106263724-2c8e03bfe9cf?q=80&w=2070&auto=format&fit=crop" alt="Chef plating" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-32 bg-zinc-950 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 gsap-fade-up">
+                <h2 class="text-spice-500 tracking-[0.2em] uppercase text-sm mb-4">Curated Selection</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold">Signature Dishes</h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-sm gsap-fade-up" style="transition-delay: 0.1s">
+                    <div class="h-48 mb-6 img-reveal rounded overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544025162-811114bd4445?q=80&w=2069&auto=format&fit=crop" class="w-full h-full object-cover" alt="Dish 1">
+                    </div>
+                    <div class="flex justify-between items-end mb-4">
+                        <h4 class="text-xl font-serif font-bold">Smoked Wagyu Ribeye</h4>
+                        <span class="text-spice-500 font-bold">$85</span>
+                    </div>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Infused with cherrywood smoke, black garlic puree, and a hint of ghost pepper.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-sm gsap-fade-up" style="transition-delay: 0.2s">
+                    <div class="h-48 mb-6 img-reveal rounded overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Dish 2">
+                    </div>
+                    <div class="flex justify-between items-end mb-4">
+                        <h4 class="text-xl font-serif font-bold">Saffron Truffle Risotto</h4>
+                        <span class="text-spice-500 font-bold">$42</span>
+                    </div>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Aged arborio rice, 24k gold leaf, shaved alba truffles, and mild kashmiri chili.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-sm gsap-fade-up" style="transition-delay: 0.3s">
+                    <div class="h-48 mb-6 img-reveal rounded overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=1971&auto=format&fit=crop" class="w-full h-full object-cover" alt="Dish 3">
+                    </div>
+                    <div class="flex justify-between items-end mb-4">
+                        <h4 class="text-xl font-serif font-bold">Fire-Roasted Lobsters</h4>
+                        <span class="text-spice-500 font-bold">$68</span>
+                    </div>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Fresh Maine lobster, habanero-lime butter, served over a bed of char-grilled asparagus.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 gsap-fade-up">
+                <a href="#" class="inline-block border-b border-spice-500 text-spice-500 pb-1 hover:text-white hover:border-white transition-colors uppercase tracking-widest text-sm">View Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-spice-700 relative z-10 overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 gsap-fade-up">
+            <div class="flex justify-center text-amber-400 mb-6 text-xl">
+                ★ ★ ★ ★ ★
+            </div>
+            <p class="text-2xl md:text-4xl font-serif italic mb-8 leading-relaxed">
+                "An absolute revelation. Spice 66 doesn't just serve food; they orchestrate a sensory journey. The balance of heat and elegance is unmatched in the city."
+            </p>
+            <p class="uppercase tracking-widest text-sm font-bold text-spice-200">— The Culinary Times</p>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+            <div class="gsap-fade-up">
+                <h3 class="text-4xl font-serif font-bold mb-8">Join Us at the Table</h3>
+                
+                <div class="space-y-6 text-gray-400 font-light mb-10">
+                    <div>
+                        <strong class="text-white block mb-1">Location</strong>
+                        124 Premium Avenue, Culinary District<br>
+                        New York, NY 10001
+                    </div>
+                    <div>
+                        <strong class="text-white block mb-1">Hours</strong>
+                        Tue - Sun: 5:00 PM – 11:30 PM<br>
+                        Monday: Closed
+                    </div>
+                    <div>
+                        <strong class="text-white block mb-1">Contact</strong>
+                        reservations@spice66.com<br>
+                        +1 (555) 019-2837
+                    </div>
+                </div>
+
+                <a href="#" class="inline-flex items-center space-x-3 bg-[#25D366] text-white px-6 py-3 rounded-full hover:bg-green-600 transition-colors shadow-lg">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    <span>Book via WhatsApp</span>
+                </a>
+            </div>
+
+            <div class="glass-card p-10 rounded-sm gsap-fade-up" id="book">
+                <h4 class="text-2xl font-serif mb-6 text-white">Make a Reservation</h4>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Date</label>
+                            <input type="date" class="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none focus:border-spice-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Guests</label>
+                            <select class="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none focus:border-spice-500 transition-colors">
+                                <option class="bg-dark">2 People</option>
+                                <option class="bg-dark">3 People</option>
+                                <option class="bg-dark">4 People</option>
+                                <option class="bg-dark">5+ People</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Name</label>
+                        <input type="text" placeholder="John Doe" class="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none focus:border-spice-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Email</label>
+                        <input type="email" placeholder="john@example.com" class="w-full bg-transparent border-b border-gray-700 py-2 text-white focus:outline-none focus:border-spice-500 transition-colors">
+                    </div>
+                    <button type="button" class="w-full bg-spice-600 text-white py-4 mt-4 rounded uppercase tracking-widest text-sm hover:bg-spice-500 transition-colors">
+                        Confirm Reservation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-900 py-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-serif font-bold tracking-widest text-white mb-4 md:mb-0">SPICE 66</div>
+            <p class="text-gray-600 text-sm">© 2026 Spice 66. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Custom Cursor Logic (The "Spice Aura")
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorGlow = document.getElementById('cursor-glow');
+        
+        window.addEventListener('mousemove', (e) => {
+            // Update dot instantly
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            
+            // Update glow with a slight delay for smooth effect
+            cursorGlow.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Add interactive hover states for the cursor
+        const interactables = document.querySelectorAll('a, button, input, select');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursorDot.style.backgroundColor = 'transparent';
+                cursorDot.style.border = '1px solid #E85D04';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorDot.style.backgroundColor = '#E85D04';
+                cursorDot.style.border = 'none';
+            });
+        });
+
+        // 2. Magnetic Buttons (Agency Level Interaction)
+        const magnets = document.querySelectorAll('.magnetic-wrap');
+        magnets.forEach(wrap => {
+            const btn = wrap.querySelector('.magnetic-btn');
+            
+            wrap.addEventListener('mousemove', (e) => {
+                const position = wrap.getBoundingClientRect();
+                const x = e.pageX - position.left - position.width / 2;
+                const y = e.pageY - position.top - position.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+            });
+
+            wrap.addEventListener('mouseout', () => {
+                btn.style.transform = `translate(0px, 0px)`;
+            });
+        });
+
+        // 3. GSAP Animations & ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Load Animation
+        gsap.fromTo(".hero-anim", 
+            { y: 50, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2 }
+        );
+
+        // Parallax Hero Background
+        gsap.to("#hero-bg", {
+            yPercent: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "section.h-screen",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // Scroll Fade Up Elements
+        gsap.utils.toArray('.gsap-fade-up').forEach(element => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%", // Triggers when top of element hits 85% of viewport
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        // Scroll Fade Left Elements (Images)
+        gsap.utils.toArray('.gsap-fade-left').forEach(element => {
+            gsap.fromTo(element, 
+                { x: 50, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        // Navbar blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass');
+                nav.classList.remove('bg-transparent');
+            } else {
+                nav.classList.remove('glass');
+                nav.classList.add('bg-transparent');
+            }
+        });
+    </script>
+</body>
+</html>
